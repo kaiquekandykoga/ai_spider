@@ -7,10 +7,19 @@
 # $ uv run main.py
 
 
+import yaml
+
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
+
+
+def load_sources() -> list[dict]:
+    """Load job sources from data/sites.yaml"""
+    with open("data/sites.yaml") as f:
+        return yaml.safe_load(f)
+
 
 JOB_SOURCES = [
     {"name": "Talent Army", "url": "https://talent.army/job-board"},
@@ -80,7 +89,8 @@ def summarise_jobs(raw_text: str) -> str:
 
 
 def main():
-    for source in JOB_SOURCES:
+    sources = load_sources()
+    for source in sources:
         raw_text = fetch_jobs(source["url"])
         summary = summarise_jobs(raw_text)
         print("=" * 60)
