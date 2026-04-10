@@ -21,13 +21,6 @@ def load_sources() -> list[dict]:
         return yaml.safe_load(f)
 
 
-JOB_SOURCES = [
-    {"name": "Talent Army", "url": "https://talent.army/job-board"},
-    {"name": "Recruit I.T.", "url": "https://www.recruitit.co.nz/jobs"},
-    {"name": "GitLab", "url": "https://about.gitlab.com/jobs/all-jobs"},
-]
-
-
 def fetch_jobs(url: str) -> str:
     """Fetch job listings using a headless browser to handle JS-rendered pages."""
     print(f"Fetching jobs from {url} ...")
