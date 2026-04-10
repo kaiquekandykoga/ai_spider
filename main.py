@@ -15,6 +15,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 JOB_SOURCES = [
     {"name": "Talent Army", "url": "https://talent.army/job-board"},
     {"name": "Recruit I.T.", "url": "https://www.recruitit.co.nz/jobs"},
+    {"name": "GitLab", "url": "https://about.gitlab.com/jobs/all-jobs"},
 ]
 
 
