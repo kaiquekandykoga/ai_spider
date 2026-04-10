@@ -6,31 +6,43 @@
 # $ uv run playwright install chromium
 # $ uv run main.py
 
-import requests
+
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
-
 
 TALENT_ARMY_URL = "https://talent.army/job-board"
 RECRUIT_IT_URL = "https://www.recruitit.co.nz/jobs"
 
 
 def fetch_jobs(url: str) -> str:
-    """Fetch job listings from a given URL and return cleaned text."""
-    headers = {
-        "User-Agent": (
+    """Fetch job listings using a headless browser to handle JS-rendered pages."""
+    print(f"Fetching jobs from {url} ...")
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(user_agent=(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/120.0.0.0 Safari/537.36"
-        )
-    }
+        ))
+        page.goto(url, wait_until="networkidle", timeout=30000)
 
-    print(f"Fetching jobs from {url} ...")
-    response = requests.get(url, headers=headers, timeout=15)
-    response.raise_for_status()
+        # Wait for job listing elements to appear in the DOM.
+        # Adjust the selector below if needed after inspecting the page.
+        try:
+            page.wait_for_selector(
+                "article, .job, .job-card, [class*='job']",
+                timeout=10000
+            )
+        except Exception:
+            pass  # Proceed even if selector times out; content may still have loaded
 
-    soup = BeautifulSoup(response.text, "html.parser")
+        html = page.content()
+        browser.close()
+
+    soup = BeautifulSoup(html, "html.parser")
 
     # Remove noise
     for tag in soup(["script", "style", "nav", "footer", "header"]):
@@ -45,7 +57,6 @@ def fetch_jobs(url: str) -> str:
 def summarise_jobs(raw_text: str) -> str:
     """Use Ollama / llama3.2:3b via LangChain to summarise the job listings."""
     llm = ChatOllama(model="llama3.2:3b", temperature=0)
-
     messages = [
         SystemMessage(
             content=(
@@ -59,7 +70,6 @@ def summarise_jobs(raw_text: str) -> str:
         ),
         HumanMessage(content=f"Here is the webpage content:\n\n{raw_text}"),
     ]
-
     print("Sending content to Ollama (llama3.2:3b) for analysis ...\n")
     response = llm.invoke(messages)
     return response.content
@@ -68,7 +78,6 @@ def summarise_jobs(raw_text: str) -> str:
 def main():
     raw_text_army = fetch_jobs(TALENT_ARMY_URL)
     summary_army = summarise_jobs(raw_text_army)
-
     print("=" * 60)
     print("AVAILABLE JOBS AT talent.army")
     print("=" * 60)
@@ -77,7 +86,6 @@ def main():
 
     raw_text_recruit = fetch_jobs(RECRUIT_IT_URL)
     summary_recruit = summarise_jobs(raw_text_recruit)
-
     print("=" * 60)
     print("AVAILABLE JOBS AT recruitit.co.nz")
     print("=" * 60)
@@ -86,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
