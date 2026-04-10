@@ -12,8 +12,10 @@ from bs4 import BeautifulSoup
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
-TALENT_ARMY_URL = "https://talent.army/job-board"
-RECRUIT_IT_URL = "https://www.recruitit.co.nz/jobs"
+JOB_SOURCES = [
+    {"name": "talent.army", "url": "https://talent.army/job-board"},
+    {"name": "recruitit.co.nz", "url": "https://www.recruitit.co.nz/jobs"},
+]
 
 
 def fetch_jobs(url: str) -> str:
@@ -22,19 +24,20 @@ def fetch_jobs(url: str) -> str:
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page(user_agent=(
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/120.0.0.0 Safari/537.36"
-        ))
+        page = browser.new_page(
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            )
+        )
         page.goto(url, wait_until="networkidle", timeout=30000)
 
         # Wait for job listing elements to appear in the DOM.
         # Adjust the selector below if needed after inspecting the page.
         try:
             page.wait_for_selector(
-                "article, .job, .job-card, [class*='job']",
-                timeout=10000
+                "article, .job, .job-card, [class*='job']", timeout=10000
             )
         except Exception:
             pass  # Proceed even if selector times out; content may still have loaded
@@ -76,22 +79,15 @@ def summarise_jobs(raw_text: str) -> str:
 
 
 def main():
-    raw_text_army = fetch_jobs(TALENT_ARMY_URL)
-    summary_army = summarise_jobs(raw_text_army)
-    print("=" * 60)
-    print("AVAILABLE JOBS AT talent.army")
-    print("=" * 60)
-    print(summary_army)
-    print()
-
-    raw_text_recruit = fetch_jobs(RECRUIT_IT_URL)
-    summary_recruit = summarise_jobs(raw_text_recruit)
-    print("=" * 60)
-    print("AVAILABLE JOBS AT recruitit.co.nz")
-    print("=" * 60)
-    print(summary_recruit)
+    for source in JOB_SOURCES:
+        raw_text = fetch_jobs(source["url"])
+        summary = summarise_jobs(raw_text)
+        print("=" * 60)
+        print(f"AVAILABLE JOBS AT {source['name']}")
+        print("=" * 60)
+        print(summary)
+        print()
 
 
 if __name__ == "__main__":
     main()
-
