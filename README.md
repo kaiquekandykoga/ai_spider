@@ -1,6 +1,6 @@
 # AI Spider
 
-Discover and summarize job listings from across the web using AI.
+Discover and summarize job listings from across the web using AI
 
 ## Quick Start
 

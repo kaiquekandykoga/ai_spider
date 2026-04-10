@@ -8,11 +8,12 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
-BASE_URL = "https://talent.army"
+TALENT_ARMY_URL = "https://talent.army/job-board"
+RECRUIT_IT_URL = "https://www.recruitit.co.nz/jobs"
 
 
-def fetch_jobs(url: str = BASE_URL) -> str:
-    """Fetch job listings from talent.army and return cleaned text."""
+def fetch_jobs(url: str) -> str:
+    """Fetch job listings from a given URL and return cleaned text."""
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -61,15 +62,23 @@ def summarise_jobs(raw_text: str) -> str:
 
 
 def main():
-    raw_text = fetch_jobs(BASE_URL)
-    summary = summarise_jobs(raw_text)
+    raw_text_army = fetch_jobs(TALENT_ARMY_URL)
+    summary_army = summarise_jobs(raw_text_army)
 
     print("=" * 60)
     print("AVAILABLE JOBS AT talent.army")
     print("=" * 60)
-    print(summary)
+    print(summary_army)
+    print()
+
+    raw_text_recruit = fetch_jobs(RECRUIT_IT_URL)
+    summary_recruit = summarise_jobs(raw_text_recruit)
+
+    print("=" * 60)
+    print("AVAILABLE JOBS AT recruitit.co.nz")
+    print("=" * 60)
+    print(summary_recruit)
 
 
 if __name__ == "__main__":
     main()
-
