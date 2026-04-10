@@ -1,5 +1,9 @@
 # $ uv init
 # $ uv add langchain langchain-ollama langchain-core requests beautifulsoup4
+#
+# Dynamic pages using JavaScript
+# $ uv add playwright
+# $ uv run playwright install chromium
 # $ uv run main.py
 
 import requests
