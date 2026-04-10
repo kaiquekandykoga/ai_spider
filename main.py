@@ -13,8 +13,8 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 JOB_SOURCES = [
-    {"name": "talent.army", "url": "https://talent.army/job-board"},
-    {"name": "recruitit.co.nz", "url": "https://www.recruitit.co.nz/jobs"},
+    {"name": "Talent Army", "url": "https://talent.army/job-board"},
+    {"name": "Recruit I.T.", "url": "https://www.recruitit.co.nz/jobs"},
 ]
 
 
