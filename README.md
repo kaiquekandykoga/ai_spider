@@ -16,10 +16,10 @@ uv run main.py
 
 ## Configuration
 
-Edit `data/profile.yaml` to customize your job search profile:
-- `skills`: List of your technical skills
-- `desired_titles`: List of job titles you're interested in
-- `location`: Your preferred location (e.g., "Remote", "New Zealand")
+Edit `data/profile.yaml` to customize the job search profile:
+- `skills`: List of technical skills
+- `desired_titles`: List of desired job titles
+- `location`: Preferred location (e.g., "Remote", "New Zealand")
 
 ## Requirements
 
