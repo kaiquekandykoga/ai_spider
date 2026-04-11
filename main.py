@@ -1,5 +1,5 @@
 # $ uv init
-# $ uv add langchain langchain-ollama langchain-core requests beautifulsoup4
+# $ uv add langchain langchain-ollama langchain-core beautifulsoup4
 #
 # Dynamic pages using JavaScript
 # $ uv add playwright
