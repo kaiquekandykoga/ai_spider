@@ -12,7 +12,15 @@ uv run main.py
 ## Features
 
 - Fetches dynamic job listings from the web (handles JavaScript-rendered pages)
+- AI-powered job matching based on your profile (skills, desired titles, location)
 - AI-powered summaries via LangChain + Ollama
+
+## Configuration
+
+Edit `data/profile.yaml` to customize your job search profile:
+- `skills`: List of your technical skills
+- `desired_titles`: List of job titles you're interested in
+- `location`: Your preferred location (e.g., "Remote", "New Zealand")
 
 ## Requirements
 

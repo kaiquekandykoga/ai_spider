@@ -14,10 +14,18 @@ from bs4 import BeautifulSoup
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from matcher import match_jobs
+
 
 def load_sources() -> list[dict]:
     """Load job sources from data/sites.yaml"""
     with open("data/sites.yaml") as f:
+        return yaml.safe_load(f)
+
+
+def load_profile() -> dict:
+    """Load candidate profile from data/profile.yaml"""
+    with open("data/profile.yaml") as f:
         return yaml.safe_load(f)
 
 
@@ -82,14 +90,15 @@ def summarise_jobs(raw_text: str) -> str:
 
 
 def main():
+    profile = load_profile()
     sources = load_sources()
     for source in sources:
         raw_text = fetch_jobs(source["url"])
-        summary = summarise_jobs(raw_text)
+        matches = match_jobs(raw_text, profile)
         print("=" * 60)
-        print(f"AVAILABLE JOBS AT {source['name']}")
+        print(f"MATCHING JOBS AT {source['name']}")
         print("=" * 60)
-        print(summary)
+        print(matches)
         print()
 
 
