@@ -11,8 +11,6 @@ import yaml
 
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from langchain_ollama import ChatOllama
-from langchain_core.messages import HumanMessage, SystemMessage
 
 from matcher import match_jobs
 
@@ -66,27 +64,6 @@ def fetch_jobs(url: str) -> str:
 
     # Trim to avoid overloading the context window
     return text[:8000]
-
-
-def summarise_jobs(raw_text: str) -> str:
-    """Use Ollama / llama3.2:3b via LangChain to summarise the job listings."""
-    llm = ChatOllama(model="llama3.2:3b", temperature=0)
-    messages = [
-        SystemMessage(
-            content=(
-                "You are a helpful job-search assistant. "
-                "Extract and list all job positions found in the provided webpage text. "
-                "For each job include: Job Title, Company (if mentioned), Location (if mentioned), "
-                "and a one-sentence description. "
-                "Format the output as a numbered list. "
-                "If no jobs are found, say so clearly."
-            )
-        ),
-        HumanMessage(content=f"Here is the webpage content:\n\n{raw_text}"),
-    ]
-    print("Sending content to Ollama (llama3.2:3b) for analysis ...\n")
-    response = llm.invoke(messages)
-    return response.content
 
 
 def main():
