@@ -13,7 +13,6 @@ uv run main.py
 
 - Fetches dynamic job listings from the web (handles JavaScript-rendered pages)
 - AI-powered job matching based on your profile (skills, desired titles, location)
-- AI-powered summaries via LangChain + Ollama
 
 ## Configuration
 
