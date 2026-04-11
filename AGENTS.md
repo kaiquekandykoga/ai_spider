@@ -9,16 +9,21 @@ You are a coding assistant helping maintain and extend this web scraping project
 - Python 3.14+
 - LangChain (langchain-core, langchain-ollama)
 - BeautifulSoup4
-- requests
+- Playwright (headless browser for JS-rendered pages)
+- PyYAML (config files)
 - uv (package manager)
 - Ollama with llama3.2:3b model
 
 ## Key Commands
-- `uv run main.py` - Run the app (fetches and summarizes jobs from talent.army)
+- `uv run main.py` - Run the app (fetches and summarizes jobs from configured sources)
 - `uv sync` - Install/update dependencies
+- `uv run playwright install chromium` - Install browser (run once before first run)
 
 ## Project Structure
-- `main.py` - Main entry point (fetch_jobs, summarise_jobs, main)
+- `main.py` - Main entry point (fetch_jobs, match_jobs, main)
+- `matcher.py` - Job matching with Ollama/LangChain
+- `data/profile.yaml` - Candidate profile config
+- `data/sites.yaml` - Job sources config
 - `pyproject.toml` - Dependencies and project config
 - `.venv/` - Virtual environment
 
