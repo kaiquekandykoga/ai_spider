@@ -8,22 +8,21 @@
 
 
 import yaml
-
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
 from matcher import match_jobs
 
 
-def load_sources() -> list[dict]:
-    """Load job sources from data/sites.yaml"""
-    with open("data/sites.yaml") as f:
-        return yaml.safe_load(f)
-
-
 def load_profile() -> dict:
     """Load candidate profile from data/profile.yaml"""
     with open("data/profile.yaml") as f:
+        return yaml.safe_load(f)
+
+
+def load_sources() -> list[dict]:
+    """Load job sources from data/sites.yaml"""
+    with open("data/sites.yaml") as f:
         return yaml.safe_load(f)
 
 
@@ -81,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -31,3 +31,4 @@ Instructions:
     print("Sending content to Ollama (llama3.2:3b) for job matching...\n")
     response = llm.invoke(messages)
     return response.content
+
