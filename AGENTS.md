@@ -20,7 +20,8 @@ You are a coding assistant helping maintain and extend this web scraping project
 - `uv run playwright install chromium` - Install browser (run once before first run)
 
 ## Project Structure
-- `main.py` - Main entry point (fetch_jobs, match_jobs, main)
+- `main.py` - Main entry point (load_profile, load_sources, main)
+- `crawler.py` - Web crawler (crawl_source)
 - `matcher.py` - Job matching with Ollama/LangChain
 - `data/profile.yaml` - Candidate profile config
 - `data/sites.yaml` - Job sources config

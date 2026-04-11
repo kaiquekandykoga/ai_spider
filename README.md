@@ -9,6 +9,14 @@ uv sync
 uv run main.py
 ```
 
+## Project Structure
+
+- `main.py` - Main entry point (load_profile, load_sources, main)
+- `crawler.py` - Web crawler (crawl_source)
+- `matcher.py` - Job matching with Ollama/LangChain
+- `data/profile.yaml` - Candidate profile config
+- `data/sites.yaml` - Job sources config
+
 ## Features
 
 - Fetches dynamic job listings from the web (handles JavaScript-rendered pages)
