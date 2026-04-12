@@ -3,6 +3,41 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 
+def _fetch_page(url: str, return_html: bool = False) -> str:
+    """Fetch a single page using Playwright and extract cleaned text."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            )
+        )
+        page.goto(url, wait_until="networkidle", timeout=30000)
+        try:
+            page.wait_for_selector(
+                "article, .job, .job-card, [class*='job']", timeout=10000
+            )
+        except Exception:
+            pass
+        html = page.content()
+        browser.close()
+
+    if return_html:
+        return html
+
+    return _extract_text(html)
+
+
+def _extract_text(html: str) -> str:
+    """Clean HTML and extract text content."""
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup(["script", "style", "nav", "footer", "header"]):
+        tag.decompose()
+    return soup.get_text(separator="\n", strip=True)
+
+
 def _discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str]:
     """Extract and filter job-related links from HTML that belong to the same domain."""
     soup = BeautifulSoup(html, "html.parser")
@@ -47,38 +82,7 @@ def _discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str
     return links
 
 
-def _fetch_page(url: str, return_html: bool = False) -> str:
-    """Fetch a single page using Playwright and extract cleaned text."""
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page(
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/120.0.0.0 Safari/537.36"
-            )
-        )
-        page.goto(url, wait_until="networkidle", timeout=30000)
-        try:
-            page.wait_for_selector(
-                "article, .job, .job-card, [class*='job']", timeout=10000
-            )
-        except Exception:
-            pass
-        html = page.content()
-        browser.close()
-
-    if return_html:
-        return html
-
-    soup = BeautifulSoup(html, "html.parser")
-    for tag in soup(["script", "style", "nav", "footer", "header"]):
-        tag.decompose()
-    text = soup.get_text(separator="\n", strip=True)
-    return text
-
-
-def crawl_source(start_url: str, max_extra_pages: int = 10) -> str:
+def crawl_source(start_url: str, max_extra_pages: int = 4) -> str:
     """Fetch starting page, discover job links, crawl additional pages, and combine content."""
     visited = {start_url}
 
@@ -114,11 +118,3 @@ def crawl_source(start_url: str, max_extra_pages: int = 10) -> str:
         result = result[:24000]
 
     return result
-
-
-def _extract_text(html: str) -> str:
-    """Clean HTML and extract text content."""
-    soup = BeautifulSoup(html, "html.parser")
-    for tag in soup(["script", "style", "nav", "footer", "header"]):
-        tag.decompose()
-    return soup.get_text(separator="\n", strip=True)
