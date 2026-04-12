@@ -36,6 +36,29 @@ You are a coding assistant helping maintain and extend this web scraping project
 - Follow existing patterns in main.py
 - Use type hints for function parameters and return values
 
+### Python Privacy Conventions
+Use Python's standard conventions for non‑public and private members:
+
+- `_name` → non‑public (internal). Use this for normal internal helpers.
+- `__name` → private (name‑mangled). Use only when avoiding subclass collisions.
+- `__magic__` → reserved for Python internals. Never create new ones.
+
+## Examples
+
+# Internal helper (preferred)
+def _load_config(self):
+    ...
+
+# Private with name‑mangling (only when needed)
+def __compute_hash(self):
+    ...
+
+# Internal attribute
+self._cache = {}
+
+# Private attribute with name‑mangling
+self.__token = "secret"
+
 ## When Stuck
 - Check main.py for reference implementation
 - Ask user for clarification
