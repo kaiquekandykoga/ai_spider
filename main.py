@@ -12,21 +12,21 @@ from matcher import match_jobs
 from crawler import crawl_source
 
 
-def load_profile() -> dict:
+def _load_profile() -> dict:
     """Load candidate profile from data/profile.yaml"""
     with open("data/profile.yaml") as f:
         return yaml.safe_load(f)
 
 
-def load_sources() -> list[dict]:
+def _load_sources() -> list[dict]:
     """Load job sources from data/sites.yaml"""
     with open("data/sites.yaml") as f:
         return yaml.safe_load(f)
 
 
 def main():
-    profile = load_profile()
-    sources = load_sources()
+    profile = _load_profile()
+    sources = _load_sources()
     for source in sources:
         raw_text = crawl_source(source["url"])
         matches = match_jobs(raw_text, profile)

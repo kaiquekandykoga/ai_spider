@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 
-def discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str]:
+def _discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str]:
     """Extract and filter job-related links from HTML that belong to the same domain."""
     soup = BeautifulSoup(html, "html.parser")
     parsed_base = urlparse(base_url)
@@ -47,7 +47,7 @@ def discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str]
     return links
 
 
-def fetch_page(url: str, return_html: bool = False) -> str:
+def _fetch_page(url: str, return_html: bool = False) -> str:
     """Fetch a single page using Playwright and extract cleaned text."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -84,10 +84,10 @@ def crawl_source(start_url: str, max_extra_pages: int = 10) -> str:
 
     print(f"Fetching jobs from {start_url} ...")
 
-    html = fetch_page(start_url, return_html=True)
-    start_text = extract_text(html)
+    html = _fetch_page(start_url, return_html=True)
+    start_text = _extract_text(html)
 
-    job_links = discover_job_links(html, start_url, visited)
+    job_links = _discover_job_links(html, start_url, visited)
     domain = urlparse(start_url).netloc
     print(f"Discovered {len(job_links)} job-related links on {domain}")
 
@@ -97,7 +97,7 @@ def crawl_source(start_url: str, max_extra_pages: int = 10) -> str:
     for i, link in enumerate(pages_to_fetch, 1):
         print(f"Fetching additional page ({i}/{len(pages_to_fetch)}): {link}")
         visited.add(link)
-        extra_texts.append(fetch_page(link))
+        extra_texts.append(_fetch_page(link))
 
     combined = start_text + "\n" + "\n".join(extra_texts)
 
@@ -116,7 +116,7 @@ def crawl_source(start_url: str, max_extra_pages: int = 10) -> str:
     return result
 
 
-def extract_text(html: str) -> str:
+def _extract_text(html: str) -> str:
     """Clean HTML and extract text content."""
     soup = BeautifulSoup(html, "html.parser")
     for tag in soup(["script", "style", "nav", "footer", "header"]):
