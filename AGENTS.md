@@ -5,14 +5,14 @@ Python/LangChain app to find web resources.
 Python 3.14+, LangChain (langchain-core, langchain-ollama), BeautifulSoup4, Playwright, PyYAML, uv, Ollama (llama3.2:3b)
 
 ## Commands
-- `uv run main.py` — run app
+- `uv run python -m ai_spider` — run app
 - `uv sync` — install deps
 - `uv run playwright install chromium` — install browser (once)
 
 ## Structure
-- `main.py` — entry point (_load_profile, _load_sources, main)
-- `crawler.py` — web crawler (crawl_source, _fetch_page, _discover_job_links, _extract_text)
-- `matcher.py` — job matching via Ollama/LangChain
+- `src/ai_spider/main.py` — entry point (_load_profile, _load_sources, main)
+- `src/ai_spider/crawler.py` — web crawler (crawl_source, _fetch_page, _discover_job_links, _extract_text)
+- `src/ai_spider/matcher.py` — job matching via Ollama/LangChain
 - `data/profile.yaml` — candidate profile
 - `data/sites.yaml` — job sources
 - `pyproject.toml` — deps/config

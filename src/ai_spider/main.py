@@ -8,8 +8,8 @@
 
 
 import yaml
-from matcher import match_jobs
-from crawler import crawl_source
+from ai_spider.matcher import match_jobs
+from ai_spider.crawler import crawl_source
 
 
 def _load_profile() -> dict:

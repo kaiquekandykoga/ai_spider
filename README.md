@@ -6,14 +6,14 @@ Discover and summarize job listings from across the web using AI
 
 ```bash
 uv sync
-uv run main.py
+uv run python -m ai_spider
 ```
 
 ## Project Structure
 
-- `main.py` - Main entry point (load_profile, load_sources, main)
-- `crawler.py` - Web crawler (crawl_source)
-- `matcher.py` - Job matching with Ollama/LangChain
+- `src/ai_spider/main.py` - Main entry point (load_profile, load_sources, main)
+- `src/ai_spider/crawler.py` - Web crawler (crawl_source)
+- `src/ai_spider/matcher.py` - Job matching with Ollama/LangChain
 - `data/profile.yaml` - Candidate profile config
 - `data/sites.yaml` - Job sources config
 
