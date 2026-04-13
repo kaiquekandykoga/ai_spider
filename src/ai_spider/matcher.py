@@ -4,7 +4,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
-def match_jobs(raw_text: str, profile: dict) -> str | list[str | dict]:
+def match_jobs(raw_text: str, profile: dict) -> str:
     """Use Ollama via LangChain to match jobs against a candidate profile."""
     model_name = os.environ.get("AI_SPIDER_MODEL_NAME", "llama3.2:3b")
     llm = ChatOllama(model=model_name, temperature=0)
@@ -33,4 +33,8 @@ Instructions:
     ]
     print(f"Sending content to Ollama ({model_name}) for job matching...\n")
     response = llm.invoke(messages)
-    return response.content
+    content = response.content
+    if not isinstance(content, str):
+        msg = "Ollama response content is not a string"
+        raise TypeError(msg)
+    return content
