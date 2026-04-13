@@ -1,10 +1,13 @@
+import os
+
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
 def match_jobs(raw_text: str, profile: dict) -> str:
-    """Use Ollama / llama3.2:3b via LangChain to match jobs against a candidate profile."""
-    llm = ChatOllama(model="llama3.2:3b", temperature=0)
+    """Use Ollama via LangChain to match jobs against a candidate profile."""
+    model_name = os.environ.get("AI_SPIDER_MODEL_NAME", "llama3.2:3b")
+    llm = ChatOllama(model=model_name, temperature=0)
 
     skills = ", ".join(profile.get("skills", []))
     desired_titles = ", ".join(profile.get("desired_titles", []))
@@ -28,7 +31,6 @@ Instructions:
         SystemMessage(content=system_prompt),
         HumanMessage(content=f"Here are the job listings:\n\n{raw_text}"),
     ]
-    print("Sending content to Ollama (llama3.2:3b) for job matching...\n")
+    print(f"Sending content to Ollama ({model_name}) for job matching...\n")
     response = llm.invoke(messages)
     return response.content
-

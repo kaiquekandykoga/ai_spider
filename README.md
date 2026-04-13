@@ -29,10 +29,16 @@ Edit `data/profile.yaml` to customize the job search profile:
 - `desired_titles`: List of desired job titles
 - `location`: Preferred location (e.g., "Remote", "New Zealand")
 
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AI_SPIDER_MODEL_NAME` | Ollama model to use for job matching | `llama3.2:3b` |
+
 ## Requirements
 
 - Python 3.14+
-- Ollama with llama3.2:3b model
+- Ollama models
 - Playwright with Chromium:
   ```bash
   uv run playwright install chromium
