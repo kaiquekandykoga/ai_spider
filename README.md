@@ -25,8 +25,8 @@ uv run python -m ai_spider
 ## Configuration
 
 Edit `data/profile.yaml` to customize the job search profile:
-- `skills`: List of technical skills
-- `desired_titles`: List of desired job titles
+- `skills`: List of technical skills (e.g., "Ruby")
+- `desired_titles`: List of desired job titles (e.g., "AI Engineer")
 - `location`: Preferred location (e.g., "Remote", "New Zealand")
 
 ## Environment Variables
