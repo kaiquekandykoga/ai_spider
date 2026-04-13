@@ -7,7 +7,16 @@ Python 3.14+, LangChain (langchain-core, langchain-ollama), BeautifulSoup4, Play
 ## Commands
 - `uv run python -m ai_spider` — run app
 - `uv sync` — install deps
+- `uv run pytest` — run tests
+- `uv run ruff check .` — lint
+- `uv run mypy .` — typecheck
 - `uv run playwright install chromium` — install browser (once)
+
+## CI Order
+lint → typecheck → test
+
+## Env
+- `AI_SPIDER_MODEL_NAME` — Ollama model (default: llama3.2:3b)
 
 ## Structure
 - `src/ai_spider/main.py` — entry point (_load_profile, _load_sources, main)
