@@ -21,11 +21,9 @@ def main() -> None:
     for source in sources:
         raw_text = crawl_source(source["url"])
         matches = match_jobs(raw_text, profile)
-        print("=" * 60)
-        print(f"MATCHING JOBS AT {source['name']}")
-        print("=" * 60)
-        print(matches)
-        print()
+        filename = f"temp/{source['name'].replace(' ', '_').lower()}.txt"
+        with open(filename, "w") as f:
+            f.write(matches)
 
 
 if __name__ == "__main__":

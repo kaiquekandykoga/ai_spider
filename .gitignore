@@ -29,3 +29,7 @@ Thumbs.db
 *.egg-info/
 dist/
 build/
+
+# Temp output
+temp/*
+!temp/.keep
