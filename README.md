@@ -48,3 +48,9 @@ Edit `data/profile.yaml` to customize the job search profile:
 
 - Python 3.14+ | LangChain | BeautifulSoup4 | Playwright
 
+## Testing
+
+```bash
+uv run pytest
+```
+
