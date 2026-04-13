@@ -1,12 +1,3 @@
-# $ uv init
-# $ uv add langchain langchain-ollama langchain-core beautifulsoup4
-#
-# Dynamic pages using JavaScript
-# $ uv add playwright
-# $ uv run playwright install chromium
-# $ uv run main.py
-
-
 import yaml
 from ai_spider.matcher import match_jobs
 from ai_spider.crawler import crawl_source
@@ -24,7 +15,7 @@ def _load_sources() -> list[dict]:
         return yaml.safe_load(f)
 
 
-def main():
+def main() -> None:
     profile = _load_profile()
     sources = _load_sources()
     for source in sources:

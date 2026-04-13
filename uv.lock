@@ -11,14 +11,15 @@ dependencies = [
     { name = "langchain" },
     { name = "langchain-core" },
     { name = "langchain-ollama" },
-    { name = "mypy" },
     { name = "playwright" },
-    { name = "pytest" },
+    { name = "pyyaml" },
     { name = "requests" },
 ]
 
 [package.dev-dependencies]
 dev = [
+    { name = "mypy" },
+    { name = "pytest" },
     { name = "ruff" },
     { name = "types-pyyaml" },
 ]
@@ -29,14 +30,15 @@ requires-dist = [
     { name = "langchain", specifier = ">=1.2.15" },
     { name = "langchain-core", specifier = ">=1.2.28" },
     { name = "langchain-ollama", specifier = ">=1.1.0" },
-    { name = "mypy", specifier = ">=1.20.0" },
     { name = "playwright", specifier = ">=1.58.0" },
-    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "requests", specifier = ">=2.33.1" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "mypy", specifier = ">=1.20.0" },
+    { name = "pytest", specifier = ">=9.0.3" },
     { name = "ruff", specifier = ">=0.15.10" },
     { name = "types-pyyaml", specifier = ">=6.0.0" },
 ]
