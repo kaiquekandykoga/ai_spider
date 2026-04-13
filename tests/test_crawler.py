@@ -1,4 +1,3 @@
-import pytest
 from ai_spider.crawler import _extract_text, _discover_job_links
 
 

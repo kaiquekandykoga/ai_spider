@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch, MagicMock
 from ai_spider.matcher import match_jobs
 
@@ -18,7 +17,7 @@ def test_match_jobs():
         mock_instance.invoke.return_value = mock_response
         mock_llm.return_value = mock_instance
 
-        result = match_jobs("fake job text", profile)
+        match_jobs("fake job text", profile)
 
         mock_instance.invoke.assert_called_once()
         call_args = mock_instance.invoke.call_args[0][0]
