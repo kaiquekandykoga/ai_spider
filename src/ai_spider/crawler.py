@@ -58,9 +58,10 @@ def _discover_job_links(html: str, base_url: str, visited: set[str]) -> list[str
     links = []
 
     for a_tag in soup.find_all("a", href=True):
-        href = a_tag.get("href", "").strip()
+        href = a_tag.get("href")
         if not href:
             continue
+        href = str(href).strip()
 
         full_url = urljoin(base_url, href)
         parsed = urlparse(full_url)

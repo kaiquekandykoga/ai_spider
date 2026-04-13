@@ -19,6 +19,7 @@ uv run pytest
 
 ```bash
 uv run ruff check .
+uv run mypy .
 ```
 
 ## Project Structure

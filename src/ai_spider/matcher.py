@@ -4,7 +4,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
-def match_jobs(raw_text: str, profile: dict) -> str:
+def match_jobs(raw_text: str, profile: dict) -> str | list[str | dict]:
     """Use Ollama via LangChain to match jobs against a candidate profile."""
     model_name = os.environ.get("AI_SPIDER_MODEL_NAME", "llama3.2:3b")
     llm = ChatOllama(model=model_name, temperature=0)
