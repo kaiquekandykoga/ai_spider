@@ -9,6 +9,18 @@ uv sync
 uv run python -m ai_spider
 ```
 
+#### Testing
+
+```bash
+uv run pytest
+```
+
+#### Lint
+
+```bash
+uv run ruff check .
+```
+
 ## Project Structure
 
 - `src/ai_spider/main.py` - Main entry point (load_profile, load_sources, main)
@@ -47,10 +59,4 @@ Edit `data/profile.yaml` to customize the job search profile:
 ## Tech Stack
 
 - Python 3.14+ | LangChain | BeautifulSoup4 | Playwright
-
-## Testing
-
-```bash
-uv run pytest
-```
 
