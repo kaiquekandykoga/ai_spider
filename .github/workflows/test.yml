@@ -19,8 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-        with:
-          path: legacy
+        # Do NOT use `path: legacy` anymore
+        # We want the repository checked out normally so legacy/ is at the root
 
       - uses: astral-sh/setup-uv@v6
         with:
