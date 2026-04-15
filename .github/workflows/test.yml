@@ -19,21 +19,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        # Do NOT use `path: legacy` anymore
+        # We want the repository checked out normally so legacy/ is at the root
 
       - uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
-          cache-dependency-glob: "uv.lock"
+          cache-dependency-glob: "legacy/uv.lock"
 
       - name: Install dependencies
         run: uv sync --frozen --all-extras
+        working-directory: legacy
 
       - name: Lint
         run: uv run ruff check .
+        working-directory: legacy
 
       - name: Type-check
         run: uv run mypy .
+        working-directory: legacy
 
       - name: Test
         run: uv run pytest
+        working-directory: legacy
