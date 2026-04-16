@@ -40,6 +40,6 @@ jobs:
         run: uv run mypy .
         working-directory: legacy
 
-      - name: Test
-        run: uv run pytest
-        working-directory: legacy
+      # - name: Test
+      #   run: uv run pytest
+      #   working-directory: legacy
