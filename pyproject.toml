@@ -1,0 +1,25 @@
+[project]
+name = "PySide-QtQuick-Project"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "langchain>=1.2.15",
+    "langchain-core>=1.2.30",
+    "langchain-ollama>=1.1.0",
+    "mypy>=1.20.1",
+    "playwright>=1.58.0",
+    "pyside6>=6.11.0",
+    "pytest>=9.0.3",
+    "pyyaml>=6.0.3",
+    "requests>=2.33.1",
+    "ruff>=0.15.10",
+    "types-pyyaml>=6.0.12.20260408",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai_spider*"]
+
+[tool.pyside6-project]
+files = ["main.py", "ai_spider/Main.qml", "ai_spider/qmldir"]
